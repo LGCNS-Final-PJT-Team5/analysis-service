@@ -1,4 +1,3 @@
-aws:
-  athena:
-    database: drive
-    output-location: s3://modive-kinesis-bucket/athena-results/
+spring:
+  profiles:
+    active: dev

@@ -24,28 +24,26 @@ repositories {
 }
 
 dependencies {
-	// RDS용 JPA
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	runtimeOnly 'com.mysql:mysql-connector-j'
-
-	// DynamoDB SDK (v2)
-	implementation platform('software.amazon.awssdk:bom:2.25.3')
-	implementation 'software.amazon.awssdk:dynamodb'
-	implementation 'software.amazon.awssdk:dynamodb-enhanced'
-
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	compileOnly 'org.projectlombok:lombok'
+	runtimeOnly 'com.h2database:h2'
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
-	// AWS Athena + S3 클라이언트
-	implementation 'software.amazon.awssdk:athena:2.25.10'
-	implementation 'software.amazon.awssdk:s3:2.25.10'
+//
+//	// DynamoDB SDK (v2)
+//	implementation platform('software.amazon.awssdk:bom:2.25.3')
+//	implementation 'software.amazon.awssdk:dynamodb'
+//	implementation 'software.amazon.awssdk:dynamodb-enhanced'
+//	implementation 'software.amazon.awssdk:athena:2.25.10'
+//	implementation 'software.amazon.awssdk:s3:2.25.10'
 
-	// CSV 파싱용
+	// CSV
 	implementation 'org.apache.commons:commons-csv:1.10.0'
+
 }
 
 tasks.named('test') {
