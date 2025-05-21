@@ -44,3 +44,5 @@ build/
 Thumbs.db
 
 .env
+mysql-data/
+*.pemmysql-data/
