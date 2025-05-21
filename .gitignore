@@ -22,3 +22,23 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 replay_pid*
+
+# Compiled class file
+target/
+build/
+
+# Gradle
+.gradle/
+!gradle/wrapper/gradle-wrapper.jar
+.gradle-cache/
+**/build/
+
+# IDEs
+.idea/
+*.iws
+*.iml
+*.ipr
+
+# OS
+.DS_Store
+Thumbs.db
