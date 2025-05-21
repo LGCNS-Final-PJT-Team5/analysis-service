@@ -26,4 +26,12 @@ public class AthenaTestController {
 
         return ResponseEntity.ok(result);
     }
+
+    @GetMapping("/all/{driveId}")
+    public ResponseEntity<List<Map<String, String>>> testAthenaQueryAll(@PathVariable String driveId) {
+
+        List<Map<String, String>> data = athenaClientService.queryDriveData(driveId);
+
+        return ResponseEntity.ok(data);
+    }
 }
