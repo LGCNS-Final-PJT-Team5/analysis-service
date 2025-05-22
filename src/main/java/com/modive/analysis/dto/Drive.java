@@ -31,6 +31,8 @@ public class Drive {
 
     //<editor-fold desc="# Inner Classes">
     @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
     public static class SpeedLog {
         private int period;
         private int maxSpeed;
