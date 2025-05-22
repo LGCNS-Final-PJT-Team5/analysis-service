@@ -18,11 +18,11 @@ public class Drive {
     private Instant endTime;
     private int activeDriveDurationSec;
 
-    private List<TimeWithFlag> suddenAccelerations;
-    private List<TimeWithFlag> sharpTurns;
+    private List<Instant> suddenAccelerations;
+    private List<Instant> sharpTurns;
     private List<SpeedLog> speedLogs;
     private List<StartEndTime> idlingPeriods;
-    private List<SpeedRate> speedRate;
+    private List<Instant> speedRate;
     private List<StartEndTime> reactionTimes;
     private List<Instant> laneDepartures;
     private List<StartEndTime> followingDistanceEvents;
@@ -44,20 +44,6 @@ public class Drive {
     public static class StartEndTime {
         private Instant startTime;
         private Instant endTime;
-    }
-
-    @Data
-    @AllArgsConstructor
-    @NoArgsConstructor
-    public static class SpeedRate {
-        private String tag;
-        private int ratio;
-    }
-
-    @Data
-    public static class TimeWithFlag {
-        private Instant time;
-        private boolean flag;
     }
     //</editor-fold>
 }
