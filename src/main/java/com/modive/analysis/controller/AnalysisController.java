@@ -2,6 +2,7 @@ package com.modive.analysis.controller;
 
 import com.modive.analysis.client.DashboardClient;
 import com.modive.analysis.entity.Drive;
+import com.modive.analysis.repository.DriveRepository;
 import com.modive.analysis.service.AnalysisDataFromAthenaService;
 import com.modive.analysis.service.AthenaClientService;
 import com.modive.analysis.service.EventDataService;
@@ -23,7 +24,7 @@ public class AnalysisController {
     private final AthenaClientService athenaClientService;
     private final AnalysisDataFromAthenaService analysisDataFromAthenaService;
     private final EventDataService eventDataService;
-    private final DashboardClient dashboardClient;
+    private final DriveRepository driveRepository;
 
     @GetMapping("/{driveId}")
     public void postDriveAnalysis(@PathVariable String driveId) {
@@ -36,6 +37,7 @@ public class AnalysisController {
         Drive finalResult = mergeDriveResults(result1, result2);
 
         // dynamodb에 저장
+        driveRepository.save(finalResult);
     }
 
     public Drive mergeDriveResults(Drive d1, Drive d2) {
