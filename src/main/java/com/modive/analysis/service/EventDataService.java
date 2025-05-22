@@ -48,14 +48,4 @@ public class EventDataService {
         return drive;
     }
 
-    private EventEntity createMockEvent(String type, String timeStr) {
-        EventEntity event = new EventEntity();
-        event.setType(type);
-        event.setEventTime(Instant.parse(timeStr + "Z")); // Instant는 Z(UTC) 붙여야 파싱됨
-        event.setUserId(99);
-        event.setDriveId("99");
-        event.setGnssX(127.0);
-        event.setGnssY(37.0);
-        return event;
-    }
 }
