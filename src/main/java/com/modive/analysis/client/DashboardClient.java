@@ -1,6 +1,6 @@
 package com.modive.analysis.client;
 
-import com.modive.analysis.dto.Drive;
+import com.modive.analysis.entity.Drive;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;

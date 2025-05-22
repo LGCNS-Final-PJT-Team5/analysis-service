@@ -1,6 +1,6 @@
 package com.modive.analysis.service;
 
-import com.modive.analysis.dto.Drive;
+import com.modive.analysis.entity.Drive;
 import org.springframework.stereotype.Service;
 
 import java.time.*;

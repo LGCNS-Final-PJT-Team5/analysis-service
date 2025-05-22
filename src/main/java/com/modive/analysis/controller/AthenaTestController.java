@@ -1,6 +1,6 @@
 package com.modive.analysis.controller;
 
-import com.modive.analysis.dto.Drive;
+import com.modive.analysis.entity.Drive;
 import com.modive.analysis.service.AnalysisDataFromAthenaService;
 import com.modive.analysis.service.AthenaClientService;
 import lombok.RequiredArgsConstructor;
