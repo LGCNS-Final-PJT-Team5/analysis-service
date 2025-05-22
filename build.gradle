@@ -53,6 +53,9 @@ dependencies {
 	// Athena
 	implementation 'software.amazon.awssdk:athena:2.25.10'
 	implementation 'software.amazon.awssdk:s3:2.25.10'
+
+	// DynamoDB
+	implementation group: 'com.amazonaws', name: 'aws-java-sdk-dynamodb', version: '1.12.376'
 }
 
 dependencyManagement {

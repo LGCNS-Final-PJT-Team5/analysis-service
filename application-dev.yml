@@ -16,3 +16,10 @@ spring:
         format_sql: true
     show-sql: true
 
+# dynamodb
+aws:
+  dynamodb:
+    endpoint: http://localhost:8000
+  region: ap-northeast-2
+  accessKey: accesskey
+  secretKey: secretKey
