@@ -22,7 +22,7 @@ public class Drive {
     private List<Instant> sharpTurns;
     private List<SpeedLog> speedLogs;
     private List<StartEndTime> idlingPeriods;
-    private List<Instant> speedRate;
+    private List<SpeedRate> speedRate;
     private List<StartEndTime> reactionTimes;
     private List<Instant> laneDepartures;
     private List<StartEndTime> followingDistanceEvents;
@@ -44,6 +44,14 @@ public class Drive {
     public static class StartEndTime {
         private Instant startTime;
         private Instant endTime;
+    }
+
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class SpeedRate {
+        private String tag;
+        private int ratio;
     }
     //</editor-fold>
 }

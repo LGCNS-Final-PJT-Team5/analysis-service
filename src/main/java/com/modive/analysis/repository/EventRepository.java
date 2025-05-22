@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface EventRepository extends JpaRepository<EventEntity, Long> {
-    List<EventEntity> findByDriveId(int driveId);
+    List<EventEntity> findByDriveId(String driveId);
 }

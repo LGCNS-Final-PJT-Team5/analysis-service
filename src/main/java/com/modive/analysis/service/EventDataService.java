@@ -16,7 +16,7 @@ public class EventDataService {
 
     private final EventRepository eventRepository;
 
-    public Drive loadDriveData(int driveId) {
+    public Drive loadDriveData(String driveId) {
         List<EventEntity> events = eventRepository.findByDriveId(driveId);
 
         if (events.isEmpty()) {
@@ -24,7 +24,7 @@ public class EventDataService {
         }
 
         Drive drive = new Drive();
-        drive.setDriveId(String.valueOf(driveId));
+        drive.setDriveId(driveId);
 
         List<Instant> suddenAccelerations = new ArrayList<>();
         List<Instant> sharpTurns = new ArrayList<>();
@@ -47,12 +47,13 @@ public class EventDataService {
         drive.setInactiveMoments(inactiveMoments);
         return drive;
     }
+
     private EventEntity createMockEvent(String type, String timeStr) {
         EventEntity event = new EventEntity();
         event.setType(type);
         event.setEventTime(Instant.parse(timeStr + "Z")); // Instant는 Z(UTC) 붙여야 파싱됨
         event.setUserId(99);
-        event.setDriveId(99);
+        event.setDriveId("99");
         event.setGnssX(127.0);
         event.setGnssY(37.0);
         return event;

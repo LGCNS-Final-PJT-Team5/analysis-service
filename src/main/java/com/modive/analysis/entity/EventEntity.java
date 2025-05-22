@@ -19,7 +19,7 @@ public class EventEntity {
     private int userId;
 
     @Column(name = "drive_id")
-    private int driveId;
+    private String driveId;
 
     private String type;
 

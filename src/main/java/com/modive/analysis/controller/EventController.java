@@ -23,7 +23,7 @@ public class EventController {
     private final EventDataService eventDataService;
 
     @GetMapping("/{driveId}")
-    public ResponseEntity<DriveEventDto> getDrive(@PathVariable int driveId) {
+    public ResponseEntity<DriveEventDto> getDrive(@PathVariable String driveId) {
         Drive drive = eventDataService.loadDriveData(driveId);
         DriveEventDto dto = new DriveEventDto(
                 drive.getSuddenAccelerations(),
