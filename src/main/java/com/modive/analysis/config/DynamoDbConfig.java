@@ -50,9 +50,15 @@ public class DynamoDbConfig {
     public AmazonDynamoDB amazonDynamoDB() {
         return AmazonDynamoDBClientBuilder
                 .standard()
-                .withEndpointConfiguration(
-                        new AwsClientBuilder.EndpointConfiguration(endPoint, region)
-                )
+
+                // 로컬에 있는 dynamodb에 접근하는 설정
+//                .withEndpointConfiguration(
+//                        new AwsClientBuilder.EndpointConfiguration(endPoint, region)
+//                )
+
+                // 클라우드의 dynamodb에 접근하는 설정
+                .withRegion(region)
+
                 .withCredentials(awsCredentialsProvider())
                 .build();
     }
