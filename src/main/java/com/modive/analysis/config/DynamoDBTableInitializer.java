@@ -5,16 +5,18 @@ import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 import com.amazonaws.services.dynamodbv2.model.*;
 import jakarta.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
 public class DynamoDBTableInitializer {
+    private final AmazonDynamoDB dynamoDB;
 
-    private final AmazonDynamoDB dynamoDB = AmazonDynamoDBClientBuilder.standard()
-            .withEndpointConfiguration(
-                    new AwsClientBuilder.EndpointConfiguration("http://localhost:8000", "ap-northeast-2") // 리전은 임의로 넣어도 됨
-            )
-            .build();
+    public DynamoDBTableInitializer(@Value("${aws.region}") String region) {
+        this.dynamoDB = AmazonDynamoDBClientBuilder.standard()
+                .withRegion(region)
+                .build();
+    }
 
     @PostConstruct
     public void createDriveIfNotExists() {
