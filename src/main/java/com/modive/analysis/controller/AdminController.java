@@ -2,6 +2,7 @@ package com.modive.analysis.controller;
 
 import com.modive.analysis.dto.EventTotalCntByTypeDTO;
 import com.modive.analysis.dto.EventsByDriveDTO;
+import com.modive.analysis.dto.EventsByDrivesDTO;
 import com.modive.analysis.entity.Drive;
 import com.modive.analysis.repository.EventRepository;
 import lombok.RequiredArgsConstructor;
@@ -49,12 +50,13 @@ public class AdminController {
     @PostMapping("/drives")
     public Map<String, List<EventsByDriveDTO>> getTotalEventCntByDrive(@RequestBody List<String> driveIds) {
 
-        Map<String, List<EventsByDriveDTO>> result = new HashMap<>();
+        List<EventsByDrivesDTO> list = eventRepository.countByTypeGroupedByDriveIds(driveIds);
 
-        for (String driveId : driveIds) {
-            List<EventsByDriveDTO> list = eventRepository.countByTypeGroupedByDriveId(driveId);
-            result.put(driveId, list);
-        }
+        Map<String, List<EventsByDriveDTO>> result = list.stream()
+                .collect(Collectors.groupingBy(
+                        EventsByDrivesDTO::getDriveId,
+                        Collectors.mapping(e -> new EventsByDriveDTO(e.getType(), e.getCount()), Collectors.toList())
+                ));
 
         return result;
     }
