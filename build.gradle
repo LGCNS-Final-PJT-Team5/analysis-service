@@ -48,8 +48,8 @@ dependencies {
 	implementation group: 'com.amazonaws', name: 'aws-java-sdk-dynamodb', version: '1.12.376'
 
 	// Spring Cloud
-	implementation 'org.springframework.cloud:spring-cloud-starter-config'
-	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+//	implementation 'org.springframework.cloud:spring-cloud-starter-config'
+//	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 
 }
 

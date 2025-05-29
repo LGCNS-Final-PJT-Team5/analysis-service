@@ -16,3 +16,19 @@ healthCheck:
   port: 8080
   initialDelaySeconds: 30
   periodSeconds: 10
+
+#serviceAccount:
+#  create: true
+#  name:  analysis_service_sa
+
+# Analysis Service Config
+config:
+  server:
+    port: 8080
+  app:
+    name: analysis-service
+  datasource:
+    driverclassname: com.mysql.cj.jdbc.Driver
+  aws:
+    athena:
+      database: drive
