@@ -16,8 +16,8 @@ import org.springframework.context.annotation.Primary;
 @Configuration
 public class DynamoDbConfig {
 
-    @Value("${aws.dynamodb.endpoint}")
-    private String endPoint;
+//    @Value("${aws.dynamodb.endpoint}")
+//    private String endPoint;
 
     @Value("${aws.region}")
     private String region;
