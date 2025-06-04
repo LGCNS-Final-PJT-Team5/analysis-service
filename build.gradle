@@ -79,7 +79,10 @@ jacocoTestReport {
 					'**/dto/**',
 					'**/config/**',
 					'**/exception/**',
-					'**/AdminServiceApplication.*'
+					'**/AnalysisserviceApplication.*',
+					'**/AnalysisserviceApplicationTests.*',
+					'**/entity/**',
+					'**/repository/**'
 			])
 		}))
 	}

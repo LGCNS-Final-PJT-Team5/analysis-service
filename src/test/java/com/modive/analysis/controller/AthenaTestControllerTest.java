@@ -26,7 +26,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-//@SpringBootTest(properties = {"spring.config.location=classpath:application-test.yml"})
+
 @ExtendWith(MockitoExtension.class)
 public class AthenaTestControllerTest {
 
