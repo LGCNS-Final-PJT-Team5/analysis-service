@@ -7,12 +7,14 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.Instant;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+//@SpringBootTest(properties = {"spring.config.location=classpath:application-test.yml"})
 @ExtendWith(MockitoExtension.class)
 public class AnalysisControllerTest {
 

@@ -2,6 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.4.5'
 	id 'io.spring.dependency-management' version '1.1.7'
+	id 'jacoco'
 }
 
 group = 'com.example'
@@ -61,4 +62,25 @@ dependencyManagement {
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+jacocoTestReport {
+	dependsOn test // 테스트 후 리포트 생성
+
+	reports {
+		xml.required = true
+		csv.required = false
+		html.required = true // HTML 커버리지 리포트 생성
+	}
+
+	afterEvaluate {
+		classDirectories.setFrom(files(classDirectories.files.collect {
+			fileTree(dir: it, exclude: [
+					'**/dto/**',
+					'**/config/**',
+					'**/exception/**',
+					'**/AdminServiceApplication.*'
+			])
+		}))
+	}
 }
