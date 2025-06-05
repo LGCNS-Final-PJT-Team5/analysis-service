@@ -1,28 +1,3 @@
 spring:
-  profiles:
-    active: dev
   application:
     name: analysis-service
-  config:
-    import: configserver:${CONFIG_URI:http://localhost:8888}
-  cloud:
-    config:
-      profile: dev
-      label: main
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/${MYSQL_DB:MODIVE}
-    username: ${DB_USERNAME:root}
-    password: ${DB_PASSWORD:}
-
-
-aws:
-  dynamodb:
-    endpoint: ${DYNAMODB_ENDPOINT:http://localhost:8000}
-  region: ${AWS_REGION:ap-northeast-2}
-  accessKey: ${AWS_ACCESS_KEY_ID}
-  secretKey: ${AWS_SECRET_ACCESS_KEY}
-
-  athena:
-    database: drive
-    output-location: ${ATHENA_OUTPUT_LOCATION}
