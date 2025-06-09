@@ -29,7 +29,7 @@ data:
       secretKey: ${AWS_SECRET_ACCESS_KEY}
       athena:
         database: {{ .Values.config.aws.athena.database | default "drive"}}
-        output-location: ${ATHENA_OUTPUT_LOCATION}
+        output-location: s3://modive-kinesis-bucket/athena-results/ #${ATHENA_OUTPUT_LOCATION}
     management:
       endpoints:
         web:
