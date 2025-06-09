@@ -1,17 +1,20 @@
 package com.modive.analysis.controller;
 
+import com.amazonaws.Response;
 import com.modive.analysis.entity.Drive;
 import com.modive.analysis.repository.DriveRepository;
 import com.modive.analysis.service.AnalysisDataFromAthenaService;
 import com.modive.analysis.service.AthenaClientService;
 import com.modive.analysis.service.EventDataService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.lang.reflect.Field;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,8 +29,7 @@ public class AnalysisController {
     private final DriveRepository driveRepository;
 
     @GetMapping("/{driveId}")
-    public void postDriveAnalysis(@PathVariable String driveId) {
-
+    public ResponseEntity<Map<String, Object>> postDriveAnalysis(@PathVariable String driveId) {
 
         List<Map<String, String>> data = athenaClientService.queryDriveData(driveId);
         Drive result1 = analysisDataFromAthenaService.analysisData(data);
@@ -37,6 +39,12 @@ public class AnalysisController {
 
         // dynamodb에 저장
         driveRepository.save(finalResult);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "Drive analysis completed for " + driveId);
+        response.put("status", "success");
+
+        return ResponseEntity.ok(response);
     }
 
     public Drive mergeDriveResults(Drive d1, Drive d2) {
