@@ -48,6 +48,9 @@ dependencies {
 
 	// DynamoDB
 	implementation group: 'com.amazonaws', name: 'aws-java-sdk-dynamodb', version: '1.12.376'
+
+	// Micrometer Prometheus
+	implementation 'io.micrometer:micrometer-registry-prometheus'
 }
 
 dependencyManagement {
