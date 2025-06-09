@@ -34,10 +34,10 @@ public class EventDataService {
         for (EventEntity event : events) {
             Instant time = event.getEventTime();
             switch (event.getType()) {
-                case "RAPID_ACCELERATION", "RAPID_DECELERATION" -> suddenAccelerations.add(time);
-                case "SHARP_TURN" -> sharpTurns.add(time);
-                case "LANE_DEPARTURE" -> laneDepartures.add(time);
-                case "NO_OPERATION" -> inactiveMoments.add(time);
+                case "급가속", "급감속" -> suddenAccelerations.add(time);
+                case "급회전" -> sharpTurns.add(time);
+                case "차선 이탈" -> laneDepartures.add(time);
+                case "미조작" -> inactiveMoments.add(time);
             }
         }
 
