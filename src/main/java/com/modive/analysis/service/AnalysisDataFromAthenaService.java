@@ -37,7 +37,7 @@ public class AnalysisDataFromAthenaService {
         int middle = 0;
         int high = 0;
 
-        Duration periodDuration = Duration.ofSeconds(60); // period 주기
+        Duration periodDuration = Duration.ofSeconds(20); // period 주기
 
         for (int i = 0; i < data.size(); i++) {
 
@@ -71,7 +71,7 @@ public class AnalysisDataFromAthenaService {
 
             // 정속 주행 비율 분석
             if (speed > 1) {
-                if (speed < 50) low++;
+                if (speed < 30) low++;
                 else if (speed < 80) middle++;
                 else high++;
                 activeDriveDurationSec++;
