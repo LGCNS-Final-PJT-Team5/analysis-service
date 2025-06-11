@@ -38,12 +38,14 @@ public class Drive {
 
     private List<SpeedRate> speedRate;
 
-    private List<StartEndTime> reactionTimes;
+    @DynamoDBTypeConverted(converter = TypeConverter.InstantListConverter.class)
+    private List<Instant> reactionTimes;
 
     @DynamoDBTypeConverted(converter = TypeConverter.InstantListConverter.class)
     private List<Instant> laneDepartures;
 
-    private List<StartEndTime> followingDistanceEvents;
+    @DynamoDBTypeConverted(converter = TypeConverter.InstantListConverter.class)
+    private List<Instant> followingDistanceEvents;
 
     @DynamoDBTypeConverted(converter = TypeConverter.InstantListConverter.class)
     private List<Instant> inactiveMoments;

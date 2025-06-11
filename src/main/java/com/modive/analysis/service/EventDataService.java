@@ -19,9 +19,9 @@ public class EventDataService {
     public Drive loadDriveData(String driveId) {
         List<EventEntity> events = eventRepository.findByDriveId(driveId);
 
-        if (events.isEmpty()) {
-            throw new RuntimeException("No events found for driveId: " + driveId);
-        }
+//        if (events.isEmpty()) {
+//            throw new RuntimeException("No events found for driveId: " + driveId);
+//        }
 
         Drive drive = new Drive();
         drive.setDriveId(driveId);
@@ -31,6 +31,9 @@ public class EventDataService {
         List<Instant> laneDepartures = new ArrayList<>();
         List<Instant> inactiveMoments = new ArrayList<>();
 
+        List<Instant> reactionTimes = new ArrayList<>();
+        List<Instant> followingDistanceEvents = new ArrayList<>();
+
         for (EventEntity event : events) {
             Instant time = event.getEventTime();
             switch (event.getType()) {
@@ -38,6 +41,8 @@ public class EventDataService {
                 case "급회전" -> sharpTurns.add(time);
                 case "차선 이탈" -> laneDepartures.add(time);
                 case "미조작" -> inactiveMoments.add(time);
+                case "반응속도 미흡" -> reactionTimes.add(time);
+                case "안전 거리 미준수" -> followingDistanceEvents.add(time);
             }
         }
 
@@ -45,6 +50,10 @@ public class EventDataService {
         drive.setSharpTurns(sharpTurns);
         drive.setLaneDepartures(laneDepartures);
         drive.setInactiveMoments(inactiveMoments);
+
+        drive.setReactionTimes(reactionTimes);
+        drive.setFollowingDistanceEvents(followingDistanceEvents);
+
         return drive;
     }
 
