@@ -40,3 +40,18 @@ config:
     properties:
       formatsql: true
     showsql: true
+
+# HPA
+hpa:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 3
+  metric:
+    utilization:
+      memoryAverage: 70
+
+resources:
+  requests:     # 최소 자원 보장. 스케줄링 시 이 값 기준으로 노드를 배치.
+    memory: "768Mi"
+  limits:
+    memory: "1024mMi"
