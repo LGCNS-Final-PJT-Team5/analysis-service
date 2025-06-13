@@ -57,9 +57,9 @@ spec:
               path: {{ .Values.healthCheck.path }}
               port: {{ .Values.healthCheck.port }}
             initialDelaySeconds: 5
-            periodSeconds: 5
-            timeoutSeconds: 5
-            failureThreshold: 5
+            periodSeconds: 10
+            timeoutSeconds: 30
+            failureThreshold: 3
           {{- end }}
 
           # 리소스 제한 (권장)
