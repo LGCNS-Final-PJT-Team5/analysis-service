@@ -1,5 +1,5 @@
-{{ /*
-    app.fullname: 릴리스 이름과 차트 이름을 조합하여 리소스 이름을 유니크하게 구성
+{{/*
+app.fullname: 릴리스 이름과 차트 이름을 조합하여 리소스 이름을 유니크하게 구성
 */}}
 
 {{- define "app.fullname" -}}
@@ -7,7 +7,7 @@
 {{- end }}
 
 {{/*
-    app.labels: 공통 메타데이터 라벨 정의 (관리, 검색, 릴리스 추적용)
+app.labels: 공통 메타데이터 라벨 정의 (관리, 검색, 릴리스 추적용)
 */}}
 {{- define "app.labels" -}}
 app.kubernetes.io/name: {{ .Chart.Name }}
