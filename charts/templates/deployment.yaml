@@ -50,12 +50,16 @@ spec:
               port: {{ .Values.healthCheck.port }}
             initialDelaySeconds: {{ .Values.healthCheck.initialDelaySeconds }}
             periodSeconds: {{ .Values.healthCheck.periodSeconds }}
+            timeoutSeconds: 5
+            failureThreshold: 5
           readinessProbe:
             httpGet:
               path: {{ .Values.healthCheck.path }}
               port: {{ .Values.healthCheck.port }}
             initialDelaySeconds: 5
             periodSeconds: 5
+            timeoutSeconds: 5
+            failureThreshold: 5
           {{- end }}
 
           # 리소스 제한 (권장)
