@@ -1,25 +1,21 @@
-replicaCount: 1
+replicaCount: 2
 
 image:
   repository: 026274465258.dkr.ecr.ap-northeast-2.amazonaws.com/analysis-service
   tag: 20250613-2a02325
-  pullPolicy: IfNotPresent    # 이미지 가져오는 정책 로컬에 없을 때만 pull
+  pullPolicy: IfNotPresent
 
 service:
-  type: ClusterIP   # 클러스터 내부에서만 접근 가능 (기본값)
+  type: ClusterIP
   port: 80
 
-# 헬스체크 설정 (권장)
+# 헬스체크 설정
 healthCheck:
   enabled: true
   path: /actuator/health
   port: 8080
-  initialDelaySeconds: 60
+  initialDelaySeconds: 90
   periodSeconds: 10
-
-#serviceAccount:
-#  create: true
-#  name:  analysis_service_sa
 
 # Analysis Service Config
 config:
@@ -29,29 +25,41 @@ config:
     name: analysis-service
   datasource:
     hikari:
-      max: 20
+      maximum-pool-size: 50
+      minimum-idle: 10
+      connection-timeout: 3000
+      idle-timeout: 300000
+      max-lifetime: 1200000
+      leak-detection-threshold: 30000
     driverclassname: com.mysql.cj.jdbc.Driver
   aws:
     athena:
       database: drive
   jpa:
     hibernate:
-      ddlauto: update
+      ddlauto: validate
     properties:
-      formatsql: true
-    showsql: true
+      default_batch_fetch_size: 100
+      jdbc:
+        batch_size: 50
+        time_zone: UTC
+      connection:
+        provider_disables_autocommit: true
+    showsql: false
+    open-in-view: false
 
-# HPA
+# HPA 설정 (메모리 기준)
 hpa:
-  enabled: false
-  minReplicas: 1
-  maxReplicas: 3
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 10
   metric:
     utilization:
-      memoryAverage: 70
+      memoryAverage: 75
 
+# ✅ 리소스 설정 수정 (오타 제거)
 resources:
-  requests:     # 최소 자원 보장. 스케줄링 시 이 값 기준으로 노드를 배치.
-    memory: "768Mi"
+  requests:
+    memory: "800Mi"
   limits:
-    memory: "1024mMi"
+    memory: "1Gi"  # ✅ 오타 수정: "1024mMi" → "2Gi"

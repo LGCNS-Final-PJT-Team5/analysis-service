@@ -12,63 +12,118 @@ spec:
     matchLabels:
       app: {{ .Chart.Name }}
   template:
-{{/*    spec:*/}}
-{{/*      serviceAccountName: {{ .Values.serviceAccount.name }}*/}}
     metadata:
       labels:
         app: {{ .Chart.Name }}
         version: {{ .Chart.AppVersion }}
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8080"
+        prometheus.io/path: "/actuator/prometheus"
     spec:
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          
           ports:
-            - containerPort: 8080
+            - name: http
+              containerPort: 8080
+              protocol: TCP
 
-          # ConfigMap 마운트 추가
+          # ConfigMap 마운트
           volumeMounts:
             - mountPath: /app/config
               name: config-volume
               readOnly: true
 
-          # 환경변수 추가 (Spring Boot가 설정 파일을 찾을 수 있도록)
+          # 환경변수 설정
           env:
             - name: SPRING_CONFIG_LOCATION
               value: "classpath:/application.yml,file:/app/config/application.yml"
+            - name: JAVA_OPTS
+              value: >-
+                -Xms1g -Xmx1800m
+                -XX:+UseG1GC
+                -XX:MaxGCPauseMillis=200
+                -XX:+HeapDumpOnOutOfMemoryError
+                -XX:HeapDumpPath=/tmp/heapdump.hprof
+                -Dspring.profiles.active=production
 
-          # secret 불러오기
+          # Secret 환경변수
           envFrom:
             - secretRef:
                 name: analysis-service-secrets
 
-          # 헬스체크 추가
+          # 헬스체크 설정
           {{- if .Values.healthCheck.enabled }}
           livenessProbe:
             httpGet:
               path: {{ .Values.healthCheck.path }}
               port: {{ .Values.healthCheck.port }}
+              scheme: HTTP
             initialDelaySeconds: {{ .Values.healthCheck.initialDelaySeconds }}
             periodSeconds: {{ .Values.healthCheck.periodSeconds }}
-            timeoutSeconds: 5
-            failureThreshold: 5
+            timeoutSeconds: 10
+            failureThreshold: 3
+            successThreshold: 1
           readinessProbe:
             httpGet:
               path: {{ .Values.healthCheck.path }}
               port: {{ .Values.healthCheck.port }}
-            initialDelaySeconds: 5
+              scheme: HTTP
+            initialDelaySeconds: 30
             periodSeconds: 10
-            timeoutSeconds: 30
+            timeoutSeconds: 5
             failureThreshold: 3
+            successThreshold: 1
+          startupProbe:
+            httpGet:
+              path: {{ .Values.healthCheck.path }}
+              port: {{ .Values.healthCheck.port }}
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 30
+            successThreshold: 1
           {{- end }}
 
-          # 리소스 제한 (권장)
-          {{- if .Values.resources }}
+          # ✅ 리소스 설정 (문법 오류 없음)
           resources:
-            {{- toYaml .Values.resources | nindent 10 }}
-          {{- end }}
+            {{- if .Values.resources }}
+            {{- if .Values.resources.requests }}
+            requests:
+              {{- if .Values.resources.requests.memory }}
+              memory: {{ .Values.resources.requests.memory }}
+              {{- end }}
+            {{- end }}
+            {{- if .Values.resources.limits }}
+            limits:
+              {{- if .Values.resources.limits.memory }}
+              memory: {{ .Values.resources.limits.memory }}
+              {{- end }}
+            {{- end }}
+            {{- end }}
 
       volumes:
         - name: config-volume
           configMap:
             name: {{ .Chart.Name }}-config
+            
+      # 파드 분산 배치
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - {{ .Chart.Name }}
+              topologyKey: kubernetes.io/hostname
+              
+      # 우아한 종료
+      terminationGracePeriodSeconds: 30
