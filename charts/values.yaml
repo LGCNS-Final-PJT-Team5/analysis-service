@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: 026274465258.dkr.ecr.ap-northeast-2.amazonaws.com/analysis-service
-  tag: 20250613-ddcadfc
+  tag: 20250613-9d2a83a
   pullPolicy: IfNotPresent    # 이미지 가져오는 정책 로컬에 없을 때만 pull
 
 service:
