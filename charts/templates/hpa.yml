@@ -6,7 +6,7 @@ metadata:
   # 이 메타데이터는 HPA 오브젝트의 식별에 사용됩니다.
   name: {{ include "app.fullname"}}
   labels:
-    {{- include "app.labels" . | nindent4 }}
+    {{- include "app.labels" . | nindent 4 }}
 spec:
   # 어떤 Deployment 리소스를 대상으로 HPA가 동작하는지 지정
   scaleTargetRef:
