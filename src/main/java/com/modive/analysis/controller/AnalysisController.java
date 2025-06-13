@@ -6,6 +6,7 @@ import com.modive.analysis.repository.DriveRepository;
 import com.modive.analysis.service.AnalysisDataFromAthenaService;
 import com.modive.analysis.service.AthenaClientService;
 import com.modive.analysis.service.EventDataService;
+import com.modive.analysis.worker.DriveAnalysisWorker;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,18 +28,20 @@ public class AnalysisController {
     private final AnalysisDataFromAthenaService analysisDataFromAthenaService;
     private final EventDataService eventDataService;
     private final DriveRepository driveRepository;
+    private final DriveAnalysisWorker driveAnalysisWorker;
 
     @GetMapping("/{driveId}")
     public ResponseEntity<Map<String, Object>> postDriveAnalysis(@PathVariable String driveId) {
 
-        List<Map<String, String>> data = athenaClientService.queryDriveData(driveId);
-        Drive result1 = analysisDataFromAthenaService.analysisData(data);
-        Drive result2 = eventDataService.loadDriveData(driveId);
-
-        Drive finalResult = mergeDriveResults(result1, result2);
-
-        // dynamodb에 저장
-        driveRepository.save(finalResult);
+        driveAnalysisWorker.enqueue(driveId);
+//        List<Map<String, String>> data = athenaClientService.queryDriveData(driveId);
+//        Drive result1 = analysisDataFromAthenaService.analysisData(data); // Athena로 S3의 데이터 쿼리
+//        Drive result2 = eventDataService.loadDriveData(driveId); // JPA로 RDS(MySQL) 데이터 쿼리
+//
+//        Drive finalResult = mergeDriveResults(result1, result2);
+//
+//        // dynamodb에 저장
+//        driveRepository.save(finalResult);
 
         Map<String, Object> response = new HashMap<>();
         response.put("message", "Drive analysis completed for " + driveId);
