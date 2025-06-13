@@ -2,7 +2,7 @@ replicaCount: 2
 
 image:
   repository: 026274465258.dkr.ecr.ap-northeast-2.amazonaws.com/analysis-service
-  tag: 20250613-2a02325
+  tag: 20250613-2158589
   pullPolicy: IfNotPresent
 
 service:
