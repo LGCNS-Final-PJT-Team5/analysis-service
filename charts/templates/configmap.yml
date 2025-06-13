@@ -13,6 +13,8 @@ data:
       application:
         name: {{ .Values.config.app.name | default "analysis-service" }}
       datasource:
+        hikari:
+          maximum-pool-size: {{ .Values.config.datasource.hikari.max | default 10 }}
         driver-class-name: {{ .Values.config.datasource.driverclassname | default "com.mysql.cj.jdbc.Driver"}}
         url: jdbc:mysql://${DB_HOST}:${DB_PORT}/${DB_NAME}
         username: ${DB_USERNAME}

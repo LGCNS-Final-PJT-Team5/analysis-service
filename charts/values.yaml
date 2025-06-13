@@ -28,6 +28,8 @@ config:
   app:
     name: analysis-service
   datasource:
+    hikari:
+      max: 50
     driverclassname: com.mysql.cj.jdbc.Driver
   aws:
     athena:
