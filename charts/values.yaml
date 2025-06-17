@@ -52,7 +52,7 @@ config:
 hpa:
   enabled: true
   minReplicas: 2
-  maxReplicas: 10
+  maxReplicas: 3
   metric:
     utilization:
       memoryAverage: 75
